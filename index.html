@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إقلاع - Iqla3 | Nourddine Abatal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Share+Tech+Mono&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-deep: #020510;
+            --bg-card: rgba(0, 20, 40, 0.7);
+            --gold: #FFD700;
+            --cyan: #00ffff;
+            --green: #4ade80;
+            --red: #ff6b6b;
+            --purple: #8b5cf6;
+        }
+
+        body {
+            background: var(--bg-deep);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .app-wrapper {
+            width: 100%;
+            max-width: 440px;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+            background: radial-gradient(ellipse at center, #0a0f1e 0%, #020510 100%);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .screen.active { display: block; }
+
+        .subscribe-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        .premium-card {
+            background: rgba(0, 20, 40, 0.8);
+            border: 2px solid #FFD700;
+            border-radius: 20px;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 380px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255,215,0,0.08), transparent, rgba(255,215,0,0.08), transparent);
+            animation: premiumSpin 8s linear infinite;
+        }
+
+        @keyframes premiumSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .premium-badge {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: floatBadge 3s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes floatBadge {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .premium-title {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-list {
+            list-style: none;
+            text-align: right;
+            margin: 20px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-list li {
+            color: #fff;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.95rem;
+        }
+
+        .feature-list li::before { content: '✅ '; }
+
+        .price-tag {
+            font-size: 2.5rem;
+            color: #FFD700;
+            font-weight: 700;
+            margin: 20px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .price-tag .currency { font-size: 1rem; color: #fff; }
+        .price-tag .period { font-size: 0.9rem; color: #94a3b8; }
+
+        .paypal-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin: 10px 0;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .paypal-monthly {
+            background: linear-gradient(135deg, #0070ba, #003087);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 112, 186, 0.4);
+        }
+
+        .paypal-monthly:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 112, 186, 0.6);
+        }
+
+        .paypal-yearly {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .paypal-yearly:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+        }
+
+        .free-trial-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 12px;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .free-trial-btn:hover { border-color: #fff; }
+
+        .main-app {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+            background: radial-gradient(ellipse at center, #0a0f1e 0%, #020510 100%);
+        }
+
+        .main-app.active { display: block; }
+
+        .expired-banner {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid #ff6b6b;
+            border-radius: 12px;
+            padding: 12px;
+            color: #ff6b6b;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+        }
+
+        .renew-btn {
+            background: #ff6b6b;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            margin-top: 8px;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #00ffff;
+            border-radius: 50%;
+            animation: floatUp 6s infinite;
+            opacity: 0;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 25%; animation-delay: 1.5s; }
+        .particle:nth-child(3) { left: 40%; animation-delay: 3s; }
+        .particle:nth-child(4) { left: 55%; animation-delay: 0.8s; }
+        .particle:nth-child(5) { left: 70%; animation-delay: 2.2s; }
+        .particle:nth-child(6) { left: 85%; animation-delay: 4s; }
+        .particle:nth-child(7) { left: 15%; animation-delay: 5s; }
+        .particle:nth-child(8) { left: 60%; animation-delay: 3.5s; }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+
+        .watermark-section {
+            position: relative;
+            text-align: center;
+            padding: 30px 0 20px;
+            z-index: 1;
+        }
+
+        .watermark-orbit-container {
+            position: relative;
+            display: inline-block;
+            width: 200px;
+            height: 200px;
+        }
+
+        .watermark-orbit-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 180px;
+            height: 180px;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 50%;
+            animation: orbitSpin 15s linear infinite;
+        }
+
+        .watermark-orbit-ring::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: 50%;
+            width: 6px;
+            height: 6px;
+            background: #FFD700;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700;
+        }
+
+        .watermark-orbit-ring:nth-child(2) {
+            width: 140px;
+            height: 140px;
+            animation-duration: 10s;
+            animation-direction: reverse;
+            border-color: rgba(255, 215, 0, 0.1);
+        }
+
+        .watermark-orbit-ring:nth-child(2)::before {
+            background: #FFA500;
+            box-shadow: 0 0 10px #FFA500;
+        }
+
+        @keyframes orbitSpin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .watermark-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, 
+                #FFD700 0%, #FFC107 20%, #FFF8DC 40%, 
+                #FFD700 60%, #FFA500 80%, #FFD700 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: goldFlow 2.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+            letter-spacing: 2px;
+            white-space: nowrap;
+            z-index: 2;
+        }
+
+        .watermark-glow-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 160px;
+            height: 40px;
+            background: radial-gradient(ellipse, rgba(255,215,0,0.2), transparent 80%);
+            filter: blur(20px);
+            animation: centerGlow 2s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes goldFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes centerGlow {
+            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.5); }
+        }
+
+        .divider-line {
+            width: 80%;
+            height: 1px;
+            margin: 5px auto 20px;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
+            z-index: 1;
+            position: relative;
+        }
+
+        .clock-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .clock-box {
+            flex: 1;
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 255, 255, 0.25);
+            border-radius: 16px;
+            padding: 15px 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .clock-box::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(transparent 40%, rgba(0,255,255,0.03) 50%, transparent 60%);
+            animation: scanDown 4s linear infinite;
+        }
+
+        @keyframes scanDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(100%); }
+        }
+
+        .clock-label {
+            color: var(--cyan);
+            font-size: 0.7rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .binary-time {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--red);
+            text-shadow: 0 0 12px rgba(255, 107, 107, 0.7);
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .decimal-time {
+            font-size: 1.4rem;
+            color: #fff;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quit-duration-display {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--green);
+            text-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
+            margin-bottom: 10px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-circle-wrapper {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto;
+            z-index: 1;
+        }
+
+        .progress-circle-wrapper svg { transform: rotate(-90deg); }
+
+        .ring-background {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.08);
+            stroke-width: 5;
+        }
+
+        .ring-progress {
+            fill: none;
+            stroke: var(--green);
+            stroke-width: 5;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 6px rgba(74, 222, 128, 0.7));
+            transition: stroke-dashoffset 0.6s ease;
+        }
+
+        .progress-percentage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.75rem;
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        .lung-panel {
+            background: rgba(0, 20, 40, 0.6);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        .lung-emoji {
+            font-size: 2.5rem;
+            display: block;
+            animation: lungBreathe 4s ease-in-out infinite;
+        }
+
+        @keyframes lungBreathe {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.15); opacity: 1; }
+        }
+
+        .healing-progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 12px 0 8px;
+        }
+
+        .healing-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ade80, #22c55e);
+            border-radius: 3px;
+            width: 10%;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
+        }
+
+        .healing-text { color: var(--green); font-size: 0.85rem; }
+
+        .reset-btn {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            border-radius: 12px;
+            color: #c4b5fd;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .reset-btn:hover {
+            border-color: var(--purple);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
+            color: #fff;
+        }
+
+        .bio-stats-row {
+            display: flex;
+            gap: 10px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .bio-stat-card {
+            flex: 1;
+            background: rgba(0, 20, 40, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .bio-icon { font-size: 1.3rem; display: block; margin-bottom: 6px; }
+        .bio-label { font-size: 0.65rem; color: #94a3b8; display: block; margin-bottom: 4px; }
+
+        .bio-value {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--cyan);
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-bottom: 10px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .status-premium {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+            border: 1px solid #FFD700;
+        }
+
+        .status-free {
+            background: rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #94a3b8;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            z-index: 1;
+            position: relative;
+            float: left;
+        }
+
+        @media (max-width: 380px) {
+            .clock-section { flex-direction: column; }
+            .watermark-text { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <div class="particles">
+            <div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div>
+        </div>
+
+        <!-- شاشة الاشتراك -->
+        <div class="screen active" id="subscribeScreen">
+            <div class="subscribe-screen">
+                <div class="premium-card">
+                    <div class="premium-badge">💎</div>
+                    <h1 class="premium-title">إقلاع بريميوم</h1>
+                    
+                    <ul class="feature-list">
+                        <li>ساعة ثنائية متطورة</li>
+                        <li>تتبع مدة الإقلاع بدقة</li>
+                        <li>مراحل تعافي الرئة التفصيلية</li>
+                        <li>مؤشرات حيوية للتحفيز</li>
+                        <li>حلقة تقدم دائرية</li>
+                        <li>تخزين سحابي للبيانات</li>
+                        <li>بدون إعلانات</li>
+                    </ul>
+
+                    <div class="price-tag">
+                        3.99 <span class="currency">يورو</span>
+                        <br><span class="period">/ شهرياً</span>
+                    </div>
+
+                    <!-- اشتراك شهري - PayPal -->
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                        <input type="hidden" name="cmd" value="_xclick-subscriptions">
+                        <input type="hidden" name="business" value="nourddineabatal9@gmail.com">
+                        <input type="hidden" name="item_name" value="Iqla3 Premium - Monthly">
+                        <input type="hidden" name="item_number" value="IQ3-MONTHLY">
+                        <input type="hidden" name="currency_code" value="EUR">
+                        <input type="hidden" name="a3" value="3.99">
+                        <input type="hidden" name="p3" value="1">
+                        <input type="hidden" name="t3" value="M">
+                        <input type="hidden" name="src" value="1">
+                        <input type="hidden" name="sra" value="1">
+                        <input type="hidden" name="return" value="https://nourddine90.github.io/iqla3/?sub=success">
+                        <input type="hidden" name="cancel_return" value="https://nourddine90.github.io/iqla3/?sub=cancel">
+                        <button type="submit" class="paypal-btn paypal-monthly">
+                            🅿️ اشتراك شهري - 3.99€
+                        </button>
+                    </form>
+
+                    <!-- اشتراك سنوي - PayPal -->
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                        <input type="hidden" name="cmd" value="_xclick-subscriptions">
+                        <input type="hidden" name="business" value="nourddineabatal9@gmail.com">
+                        <input type="hidden" name="item_name" value="Iqla3 Premium - Yearly">
+                        <input type="hidden" name="item_number" value="IQ3-YEARLY">
+                        <input type="hidden" name="currency_code" value="EUR">
+                        <input type="hidden" name="a3" value="29.99">
+                        <input type="hidden" name="p3" value="1">
+                        <input type="hidden" name="t3" value="Y">
+                        <input type="hidden" name="src" value="1">
+                        <input type="hidden" name="sra" value="1">
+                        <input type="hidden" name="return" value="https://nourddine90.github.io/iqla3/?sub=success">
+                        <input type="hidden" name="cancel_return" value="https://nourddine90.github.io/iqla3/?sub=cancel">
+                        <button type="submit" class="paypal-btn paypal-yearly">
+                            ⭐ اشتراك سنوي - 29.99€ (وفر 37%)
+                        </button>
+                    </form>
+
+                    <button class="free-trial-btn" onclick="startFreeTrial()">
+                        🆓 تجربة مجانية 7 أيام
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- التطبيق الرئيسي -->
+        <div class="main-app" id="mainApp">
+            <div style="text-align: right; margin-bottom: 10px;">
+                <span class="status-badge status-premium" id="statusBadge">💎 بريميوم</span>
+                <button class="logout-btn" onclick="logout()">تسجيل خروج</button>
+            </div>
+            
+            <div class="expired-banner" id="expiredBanner" style="display:none;">
+                ⚠️ انتهت صلاحية اشتراكك
+                <br>
+                <button class="renew-btn" onclick="showSubscribe()">تجديد الاشتراك</button>
+            </div>
+
+            <!-- العلامة المائية Nourddine Abatal -->
+            <div class="watermark-section">
+                <div class="watermark-orbit-container">
+                    <div class="watermark-orbit-ring"></div>
+                    <div class="watermark-orbit-ring"></div>
+                    <div class="watermark-glow-center"></div>
+                    <span class="watermark-text">Nourddine Abatal</span>
+                </div>
+            </div>
+
+            <div class="divider-line"></div>
+
+            <div class="clock-section">
+                <div class="clock-box">
+                    <div class="clock-label">⚡ الوقت الثنائي</div>
+                    <div class="binary-time" id="binaryTime">000000:000000:000000</div>
+                    <div class="decimal-time" id="decimalTime">00:00:00</div>
+                </div>
+                
+                <div class="clock-box">
+                    <div class="clock-label">⧫ مدة الإقلاع</div>
+                    <div class="quit-duration-display" id="quitDuration">0000يوم 00س 00د 00ث</div>
+                    
+                    <div class="progress-circle-wrapper">
+                        <svg width="70" height="70" viewBox="0 0 70 70">
+                            <circle class="ring-background" cx="35" cy="35" r="30"/>
+                            <circle class="ring-progress" id="progressCircle" cx="35" cy="35" r="30"/>
+                        </svg>
+                        <div class="progress-percentage" id="progressPercent">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lung-panel">
+                <span class="lung-emoji">🫁</span>
+                <div class="healing-progress-bar">
+                    <div class="healing-fill" id="healingFill"></div>
+                </div>
+                <p class="healing-text" id="healingText">بداية رحلة التعافي...</p>
+            </div>
+
+            <button class="reset-btn" id="resetButton">⟳ إعادة ضبط المؤقت</button>
+
+            <div class="bio-stats-row">
+                <div class="bio-stat-card">
+                    <span class="bio-icon">⚛️</span>
+                    <span class="bio-label">نبض التحفيز</span>
+                    <span class="bio-value" id="motivationPulse">94%</span>
+                </div>
+                <div class="bio-stat-card">
+                    <span class="bio-icon">🧬</span>
+                    <span class="bio-label">درجة النقاء</span>
+                    <span class="bio-value" id="purityLevel">72%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =============== إقلاع - Iqla3 ===============
+        // Nourddine Abatal | nourddineabatal9@gmail.com
+        // الإصدار 1.0 - مايو 2026
+
+        class SubscriptionManager {
+            constructor() {
+                this.checkSubscription();
+                this.handleReturnURL();
+            }
+
+            checkSubscription() {
+                const subData = JSON.parse(localStorage.getItem('iqla3_subscription') || '{}');
+                const now = new Date().getTime();
+
+                if (subData.type === 'premium' && subData.expiresAt > now) {
+                    this.showMainApp('premium');
+                } else if (subData.type === 'trial' && subData.expiresAt > now) {
+                    this.showMainApp('trial');
+                } else {
+                    this.showSubscribeScreen();
+                }
+            }
+
+            handleReturnURL() {
+                const params = new URLSearchParams(window.location.search);
+                if (params.get('sub') === 'success') {
+                    this.activatePremium('monthly');
+                    window.history.replaceState({}, '', '/iqla3/');
+                }
+            }
+
+            activatePremium(planType) {
+                const now = new Date().getTime();
+                let duration = 30 * 24 * 60 * 60 * 1000;
+                if (planType === 'yearly') duration = 365 * 24 * 60 * 60 * 1000;
+
+                localStorage.setItem('iqla3_subscription', JSON.stringify({
+                    type: 'premium',
+                    plan: planType,
+                    activatedAt: now,
+                    expiresAt: now + duration
+                }));
+                
+                this.showMainApp('premium');
+                alert('✅ شكراً لاشتراكك! تم تفعيل إقلاع بريميوم بنجاح.');
+            }
+
+            showSubscribeScreen() {
+                document.getElementById('subscribeScreen').classList.add('active');
+                document.getElementById('mainApp').classList.remove('active');
+            }
+
+            showMainApp(type) {
+                document.getElementById('subscribeScreen').classList.remove('active');
+                document.getElementById('mainApp').classList.add('active');
+
+                const badge = document.getElementById('statusBadge');
+                const banner = document.getElementById('expiredBanner');
+
+                if (type === 'premium') {
+                    badge.textContent = '💎 بريميوم';
+                    badge.className = 'status-badge status-premium';
+                    banner.style.display = 'none';
+                } else {
+                    badge.textContent = '🆓 تجربة مجانية';
+                    badge.className = 'status-badge status-free';
+                    banner.style.display = 'none';
+                }
+
+                if (!window.iqla3App) {
+                    window.iqla3App = new Iqla3App();
+                }
+            }
+        }
+
+        function startFreeTrial() {
+            const now = new Date().getTime();
+            localStorage.setItem('iqla3_subscription', JSON.stringify({
+                type: 'trial',
+                activatedAt: now,
+                expiresAt: now + (7 * 24 * 60 * 60 * 1000)
+            }));
+            location.reload();
+        }
+
+        function logout() {
+            if (confirm('العودة إلى شاشة الاشتراك؟')) {
+                localStorage.removeItem('iqla3_subscription');
+                location.reload();
+            }
+        }
+
+        function showSubscribe() {
+            localStorage.removeItem('iqla3_subscription');
+            location.reload();
+        }
+
+        class Iqla3App {
+            constructor() {
+                this.quitStartDate = this.loadQuitDate();
+                this.init();
+            }
+
+            init() {
+                if (!document.getElementById('mainApp').classList.contains('active')) return;
+                this.updateAll();
+                this.setupResetButton();
+                this.simulateBioStats();
+                setInterval(() => this.updateAll(), 1000);
+                setInterval(() => this.simulateBioStats(), 3000);
+            }
+
+            updateAll() {
+                this.updateClock();
+                this.updateQuitDuration();
+                this.updateHealingProgress();
+            }
+
+            updateClock() {
+                const now = new Date();
+                const h = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
+                const decEl = document.getElementById('decimalTime');
+                const binEl = document.getElementById('binaryTime');
+                if (decEl) decEl.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                if (binEl) binEl.textContent = `${h.toString(2).padStart(6,'0')}:${m.toString(2).padStart(6,'0')}:${s.toString(2).padStart(6,'0')}`;
+            }
+
+            updateQuitDuration() {
+                const now = new Date();
+                const diffMs = now - this.quitStartDate;
+                const totalSeconds = Math.floor(diffMs / 1000);
+                const days = Math.floor(totalSeconds / 86400);
+                const hours = Math.floor((totalSeconds % 86400) / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+                
+                const durEl = document.getElementById('quitDuration');
+                if (durEl) durEl.textContent = `${String(days).padStart(4,'0')}يوم ${String(hours).padStart(2,'0')}س ${String(minutes).padStart(2,'0')}د ${String(seconds).padStart(2,'0')}ث`;
+                
+                const circumference = 2 * Math.PI * 30;
+                const progressPercent = Math.min((days / 30) * 100, 100);
+                const offset = circumference - (progressPercent / 100) * circumference;
+                
+                const circle = document.getElementById('progressCircle');
+                if (circle) {
+                    circle.style.strokeDasharray = circumference;
+                    circle.style.strokeDashoffset = offset;
+                }
+                const percentEl = document.getElementById('progressPercent');
+                if (percentEl) percentEl.textContent = Math.round(progressPercent) + '%';
+            }
+
+            updateHealingProgress() {
+                const now = new Date();
+                const diffDays = (now - this.quitStartDate) / (1000 * 60 * 60 * 24);
+                let percent = 10, text = 'بداية رحلة التعافي...';
+                
+                if (diffDays >= 1 && diffDays < 3) { percent = 25; text = 'النيكوتين يغادر جسدك...'; }
+                else if (diffDays >= 3 && diffDays < 7) { percent = 40; text = 'تحسن التنفس بشكل ملحوظ...'; }
+                else if (diffDays >= 7 && diffDays < 14) { percent = 60; text = 'الرئتان تنظفان نفسيهما...'; }
+                else if (diffDays >= 14 && diffDays < 30) { percent = 75; text = 'الدورة الدموية تتحسن...'; }
+                else if (diffDays >= 30 && diffDays < 90) { percent = 84; text = 'وظائف الرئة في تحسن مستمر...'; }
+                else if (diffDays >= 90) { percent = 95; text = 'أنت بطل! صحة رئتيك ممتازة'; }
+                
+                const fillEl = document.getElementById('healingFill');
+                const textEl = document.getElementById('healingText');
+                if (fillEl) fillEl.style.width = percent + '%';
+                if (textEl) textEl.textContent = text;
+            }
+
+            simulateBioStats() {
+                const pulseEl = document.getElementById('motivationPulse');
+                const purityEl = document.getElementById('purityLevel');
+                if (pulseEl) pulseEl.textContent = (85 + Math.floor(Math.random() * 15)) + '%';
+                if (purityEl) purityEl.textContent = (60 + Math.floor(Math.random() * 20)) + '%';
+            }
+
+            setupResetButton() {
+                const btn = document.getElementById('resetButton');
+                if (btn) {
+                    btn.addEventListener('click', () => {
+                        if (confirm('بداية جديدة شجاعة! هل تريد إعادة ضبط المؤقت؟')) {
+                            this.quitStartDate = new Date();
+                            this.saveQuitDate(this.quitStartDate);
+                            this.updateAll();
+                        }
+                    });
+                }
+            }
+
+            loadQuitDate() {
+                const saved = localStorage.getItem('iqla3_quit_date');
+                return saved ? new Date(parseInt(saved)) : new Date();
+            }
+
+            saveQuitDate(date) {
+                localStorage.setItem('iqla3_quit_date', date.getTime().toString());
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.subManager = new SubscriptionManager();
+        });
+    </script>
+</body>
+</html>
