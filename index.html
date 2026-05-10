@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إقلاع برو - Iqla3 Pro | Nourddine Abatal</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚭</text></svg>">
+    <meta name="theme-color" content="#020510">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Share+Tech+Mono&display=swap');
 
@@ -33,6 +37,47 @@
             max-width: 440px;
             min-height: 100vh;
             position: relative;
+        }
+
+        /* زر تحميل APK */
+        .download-bar {
+            text-align: center;
+            padding: 12px;
+            z-index: 999;
+            position: relative;
+            background: rgba(0,0,0,0.6);
+            border-bottom: 1px solid rgba(255,215,0,0.3);
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            color: #000;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(74,222,128,0.4);
+            transition: all 0.3s;
+            animation: downloadPulse 2s ease-in-out infinite;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74,222,128,0.6);
+        }
+
+        @keyframes downloadPulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(74,222,128,0.4); }
+            50% { box-shadow: 0 4px 25px rgba(74,222,128,0.7); }
+        }
+
+        .download-hint {
+            color: #94a3b8;
+            font-size: 0.65rem;
+            margin-top: 4px;
         }
 
         .screen {
@@ -615,6 +660,14 @@
 </head>
 <body>
     <div class="app-wrapper">
+        <!-- زر تحميل APK -->
+        <div class="download-bar">
+            <a href="https://drive.google.com/uc?export=download&id=1svEjuvzEw1VvxLLl6vNKpkLQDgn726my" class="download-btn">
+                📥 تحميل التطبيق (APK)
+            </a>
+            <p class="download-hint">للأندرويد • مجاني • إصدار 1.0</p>
+        </div>
+
         <div class="particles">
             <div class="particle"></div><div class="particle"></div>
             <div class="particle"></div><div class="particle"></div>
