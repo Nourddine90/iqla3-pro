@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إقلاع - Iqla3 | Nourddine Abatal</title>
+    <title>إقلاع برو - Iqla3 Pro | Nourddine Abatal</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Share+Tech+Mono&display=swap');
 
@@ -647,17 +647,17 @@
                     <!-- اشتراك شهري - PayPal -->
                     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
                         <input type="hidden" name="cmd" value="_xclick-subscriptions">
-                        <input type="hidden" name="business" value="nourddineabatal9@gmail.com">
-                        <input type="hidden" name="item_name" value="Iqla3 Premium - Monthly">
-                        <input type="hidden" name="item_number" value="IQ3-MONTHLY">
+                        <input type="hidden" name="business" value="nourddineabatal06@gmail.com">
+                        <input type="hidden" name="item_name" value="Iqla3 Pro - Monthly Premium">
+                        <input type="hidden" name="item_number" value="IQ3P-MONTHLY">
                         <input type="hidden" name="currency_code" value="EUR">
                         <input type="hidden" name="a3" value="3.99">
                         <input type="hidden" name="p3" value="1">
                         <input type="hidden" name="t3" value="M">
                         <input type="hidden" name="src" value="1">
                         <input type="hidden" name="sra" value="1">
-                        <input type="hidden" name="return" value="https://nourddine90.github.io/iqla3/?sub=success">
-                        <input type="hidden" name="cancel_return" value="https://nourddine90.github.io/iqla3/?sub=cancel">
+                        <input type="hidden" name="return" value="https://nourddine90.github.io/iqla3-pro/?sub=success">
+                        <input type="hidden" name="cancel_return" value="https://nourddine90.github.io/iqla3-pro/?sub=cancel">
                         <button type="submit" class="paypal-btn paypal-monthly">
                             🅿️ اشتراك شهري - 3.99€
                         </button>
@@ -666,17 +666,17 @@
                     <!-- اشتراك سنوي - PayPal -->
                     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
                         <input type="hidden" name="cmd" value="_xclick-subscriptions">
-                        <input type="hidden" name="business" value="nourddineabatal9@gmail.com">
-                        <input type="hidden" name="item_name" value="Iqla3 Premium - Yearly">
-                        <input type="hidden" name="item_number" value="IQ3-YEARLY">
+                        <input type="hidden" name="business" value="nourddineabatal06@gmail.com">
+                        <input type="hidden" name="item_name" value="Iqla3 Pro - Yearly Premium">
+                        <input type="hidden" name="item_number" value="IQ3P-YEARLY">
                         <input type="hidden" name="currency_code" value="EUR">
                         <input type="hidden" name="a3" value="29.99">
                         <input type="hidden" name="p3" value="1">
                         <input type="hidden" name="t3" value="Y">
                         <input type="hidden" name="src" value="1">
                         <input type="hidden" name="sra" value="1">
-                        <input type="hidden" name="return" value="https://nourddine90.github.io/iqla3/?sub=success">
-                        <input type="hidden" name="cancel_return" value="https://nourddine90.github.io/iqla3/?sub=cancel">
+                        <input type="hidden" name="return" value="https://nourddine90.github.io/iqla3-pro/?sub=success">
+                        <input type="hidden" name="cancel_return" value="https://nourddine90.github.io/iqla3-pro/?sub=cancel">
                         <button type="submit" class="paypal-btn paypal-yearly">
                             ⭐ اشتراك سنوي - 29.99€ (وفر 37%)
                         </button>
@@ -761,9 +761,9 @@
     </div>
 
     <script>
-        // =============== إقلاع - Iqla3 ===============
-        // Nourddine Abatal | nourddineabatal9@gmail.com
-        // الإصدار 1.0 - مايو 2026
+        // =============== إقلاع برو - Iqla3 Pro ===============
+        // Nourddine Abatal | nourddineabatal06@gmail.com
+        // الإصدار 1.1 - مايو 2026
 
         class SubscriptionManager {
             constructor() {
@@ -772,7 +772,7 @@
             }
 
             checkSubscription() {
-                const subData = JSON.parse(localStorage.getItem('iqla3_subscription') || '{}');
+                const subData = JSON.parse(localStorage.getItem('iqla3_pro_subscription') || '{}');
                 const now = new Date().getTime();
 
                 if (subData.type === 'premium' && subData.expiresAt > now) {
@@ -788,7 +788,7 @@
                 const params = new URLSearchParams(window.location.search);
                 if (params.get('sub') === 'success') {
                     this.activatePremium('monthly');
-                    window.history.replaceState({}, '', '/iqla3/');
+                    window.history.replaceState({}, '', '/iqla3-pro/');
                 }
             }
 
@@ -797,7 +797,7 @@
                 let duration = 30 * 24 * 60 * 60 * 1000;
                 if (planType === 'yearly') duration = 365 * 24 * 60 * 60 * 1000;
 
-                localStorage.setItem('iqla3_subscription', JSON.stringify({
+                localStorage.setItem('iqla3_pro_subscription', JSON.stringify({
                     type: 'premium',
                     plan: planType,
                     activatedAt: now,
@@ -838,7 +838,7 @@
 
         function startFreeTrial() {
             const now = new Date().getTime();
-            localStorage.setItem('iqla3_subscription', JSON.stringify({
+            localStorage.setItem('iqla3_pro_subscription', JSON.stringify({
                 type: 'trial',
                 activatedAt: now,
                 expiresAt: now + (7 * 24 * 60 * 60 * 1000)
@@ -848,13 +848,13 @@
 
         function logout() {
             if (confirm('العودة إلى شاشة الاشتراك؟')) {
-                localStorage.removeItem('iqla3_subscription');
+                localStorage.removeItem('iqla3_pro_subscription');
                 location.reload();
             }
         }
 
         function showSubscribe() {
-            localStorage.removeItem('iqla3_subscription');
+            localStorage.removeItem('iqla3_pro_subscription');
             location.reload();
         }
 
